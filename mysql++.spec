@@ -1,9 +1,3 @@
-#
-# TODO:
-# create subpackages (?), when you use ac/am there's problem
-# with version of libtool (maybe my system is not up to date...)
-# For me, this pkg is ready to use
-
 Summary:	C++ interface to MySQL Database
 Summary(pl):	Interfejs C++ do bazy MySQL
 Name:		mysql++
@@ -28,10 +22,11 @@ oraz biblioteki potrzebne do rozwoju aplikacji klienckich w jêzyku C++.
 %setup -q
 
 %build
-#aclocal
-#%{__autoconf}
-#%{__automake}
-%configure2_13
+%{__libtoolize}
+aclocal
+%{__autoconf}
+%{__automake}
+%configure
 %{__make}
 
 %install
