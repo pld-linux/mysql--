@@ -7,7 +7,10 @@ License:	LGPL
 Group:		Development/Libraries
 Source0:	ftp://sunsite.icm.edu.pl/pub/unix/mysql/Downloads/mysql++/%{name}-%{version}.tar.gz
 URL:		http://www.mysql.com/downloads/api-mysql++.html
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	mysql-devel
+BuildRequires:	libtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -53,7 +56,6 @@ aclocal
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
