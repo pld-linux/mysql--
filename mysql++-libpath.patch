@@ -5,7 +5,7 @@
  AC_ARG_WITH(mysql-lib,
      [  --with-mysql-lib=<path> directory path of MySQL library installation],
 -    [MYSQL_lib_check=$with_mysql/lib/mysql])
-+    [MYSQL_lib_check=$with_mysql])
++    [MYSQL_lib_check=$with_mysql_lib])
  
  AC_ARG_WITH(mysql-include,
      [  --with-mysql-include=<path>
