@@ -62,13 +62,20 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post   -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
+
+%files
+%defattr(644,root,root,755)
+%{_libdir}/lib*.so.*.*
+
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/*
-%{_libdir}/*.so*
 %doc README doc/*
+%{_includedir}/*
+%{_libdir}/lib*.so
+%{_libdir}/lib*.la
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/*.la
-%{_libdir}/*.a
+%{_libdir}/lib*.a
