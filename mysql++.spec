@@ -1,21 +1,15 @@
 Summary:	C++ interface to MySQL Database
 Summary(pl):	Interfejs C++ do bazy MySQL
 Name:		mysql++
-Version:	1.7.9
-Release:	5
+Version:	1.7.26
+Release:	1
 License:	LGPL
 Group:		Libraries
-Source0:	ftp://sunsite.icm.edu.pl/pub/unix/mysql/Downloads/mysql++/%{name}-%{version}.tar.gz
-# Source0-md5:	1312fb4e33dcce07fac5fa9c2ac801f7
-Patch0:		ftp://sunsite.icm.edu.pl/pub/unix/mysql/Downloads/mysql++/mysql++-gcc-3.0.patch.gz
-Patch1:		ftp://sunsite.icm.edu.pl/pub/unix/mysql/Downloads/mysql++/mysql++-gcc-3.2.patch.gz
-Patch2:		ftp://sunsite.icm.edu.pl/pub/unix/mysql/Downloads/mysql++/mysql++-gcc-3.2.2.patch.gz
-# fixed from ftp://sunsite.icm.edu.pl/pub/unix/mysql/Downloads/mysql++/mysqlplus-gcc-3.4.patch.gz
-Patch3:		%{name}-gcc-3.4.patch
-Patch4:		%{name}-examples-gcc3.patch
-Patch5:		%{name}-nolibs.patch
-Patch6:		%{name}-libpath.patch
-URL:		http://www.mysql.com/downloads/api-mysql++.html
+Source0:	http://tangentsoft.net/mysql++/releases/%{name}-%{version}.tar.gz
+# Source0-md5:	2e425b1a334523723aadd86c9a3185bc
+Patch1:		%{name}-nolibs.patch
+Patch2:		%{name}-libpath.patch
+URL:		http://tangentsoft.net/mysql++/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
@@ -59,13 +53,8 @@ statyczne.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
 
 %build
 %{__libtoolize}
@@ -94,7 +83,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc README doc/*
+%doc doc/*
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
 %{_includedir}/*
