@@ -1,0 +1,675 @@
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/compare1.hh mysql++-1.7.9-gcc3.4/sqlplusint/compare1.hh
+*** mysql++-1.7.9-gcc3.2/sqlplusint/compare1.hh	Mon Feb 10 11:48:13 2003
+--- mysql++-1.7.9-gcc3.4/sqlplusint/compare1.hh	Mon Feb 10 15:10:58 2003
+***************
+*** 21,24 ****
+--- 21,25 ----
+  class MysqlCmpCStr : public MysqlCmp<BinaryPred, const char *>
+  {
++   class CmpType      cmp2;
+  public:
+    MysqlCmpCStr(uint i, const BinaryPred &f, const char* c) : MysqlCmp<BinaryPred, const char *> (i,f,c) {}
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/connection1.hh mysql++-1.7.9-gcc3.4/sqlplusint/connection1.hh
+*** mysql++-1.7.9-gcc3.2/sqlplusint/connection1.hh	Mon Feb 10 11:47:44 2003
+--- mysql++-1.7.9-gcc3.4/sqlplusint/connection1.hh	Mon Feb 10 15:10:59 2003
+***************
+*** 9,19 ****
+  #endif
+  #include <mysql.h>
+! #include <vector.h>
+! #include <deque.h>
+! #include <list.h>
+! #include <slist.h>
+! #include <set.h>
+! #include <map.h>
+! #include <multiset.h>
+  #include "define_short"
+  #include "exceptions.hh"
+--- 9,19 ----
+  #endif
+  #include <mysql.h>
+! #include <vector>
+! #include <deque>
+! #include <list>
+! #include <ext/slist>
+! #include <set>
+! #include <map>
+! #include <ext/rb_tree>
+  #include "define_short"
+  #include "exceptions.hh"
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/datetime.cc mysql++-1.7.9-gcc3.4/sqlplusint/datetime.cc
+*** mysql++-1.7.9-gcc3.2/sqlplusint/datetime.cc	Sat May 19 18:44:48 2001
+--- mysql++-1.7.9-gcc3.4/sqlplusint/datetime.cc	Mon Feb 10 15:10:58 2003
+***************
+*** 8,23 ****
+  
+  #include "datetime3.hh"
+! #include <iomanip.h>
+  
+! ostream& mysql_date::out_stream (ostream& s) const {
+    char fill = s.fill('0');
+  #ifdef __USLC__
+    long flags = s.setf(ios::right);
+  #else
+!   ios::fmtflags flags = s.setf(ios::right);
+  #endif
+!   s << setw(4) << year << '-' 
+!     << setw(2) << month << '-'
+!     << setw(2) << day;
+    s.flags(flags);
+    s.fill(fill);
+--- 8,23 ----
+  
+  #include "datetime3.hh"
+! #include <iomanip>
+  
+! std::ostream& mysql_date::out_stream (std::ostream& s) const {
+    char fill = s.fill('0');
+  #ifdef __USLC__
+    long flags = s.setf(ios::right);
+  #else
+!   std::ios::fmtflags flags = s.setf(std::ios::right);
+  #endif
+!   s << std::setw(4) << year << '-' 
+!     << std::setw(2) << month << '-'
+!     << std::setw(2) << day;
+    s.flags(flags);
+    s.fill(fill);
+***************
+*** 25,38 ****
+  }
+  
+! ostream& mysql_time::out_stream (ostream& s) const {
+    char fill = s.fill('0');
+  #ifdef __USLC__
+!   long flags = s.setf(ios::right);
+  #else
+!   ios::fmtflags flags = s.setf(ios::right);
+  #endif
+!   s << setw(2) << hour << ':' 
+!     << setw(2) << minute << ':'
+!     << setw(2) << second;
+    s.flags(flags);
+    s.fill(fill);
+--- 25,38 ----
+  }
+  
+! std::ostream& mysql_time::out_stream (std::ostream& s) const {
+    char fill = s.fill('0');
+  #ifdef __USLC__
+!   long flags = s.setf(std::ios::right);
+  #else
+!   std::ios::fmtflags flags = s.setf(std::ios::right);
+  #endif
+!   s << std::setw(2) << hour << ':' 
+!     << std::setw(2) << minute << ':'
+!     << std::setw(2) << second;
+    s.flags(flags);
+    s.fill(fill);
+***************
+*** 40,44 ****
+  }
+  
+! ostream& MysqlDateTime::out_stream (ostream& s) const {
+    mysql_date::out_stream(s);
+    s << " ";
+--- 40,44 ----
+  }
+  
+! std::ostream& MysqlDateTime::out_stream (std::ostream& s) const {
+    mysql_date::out_stream(s);
+    s << " ";
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/datetime1.hh mysql++-1.7.9-gcc3.4/sqlplusint/datetime1.hh
+*** mysql++-1.7.9-gcc3.2/sqlplusint/datetime1.hh	Mon Feb 10 11:47:44 2003
+--- mysql++-1.7.9-gcc3.4/sqlplusint/datetime1.hh	Mon Feb 10 15:10:59 2003
+***************
+*** 10,15 ****
+  
+  #include <string>
+! #include <strstream.h>
+! #include <iostream.h>
+  #include "defs"
+  #include "define_short"
+--- 10,14 ----
+  
+  #include <string>
+! #include <iostream>
+  #include "defs"
+  #include "define_short"
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/exceptions.hh mysql++-1.7.9-gcc3.4/sqlplusint/exceptions.hh
+*** mysql++-1.7.9-gcc3.2/sqlplusint/exceptions.hh	Mon Feb 10 11:47:44 2003
+--- mysql++-1.7.9-gcc3.4/sqlplusint/exceptions.hh	Mon Feb 10 15:10:59 2003
+***************
+*** 12,50 ****
+  
+  //: Exception thrown when a BadQuery is encountered
+! class BadQuery : public exception {
+  public:
+!   BadQuery(const string &er = "") : error(er) {}
+!   const string error; //: The error message
+!   virtual const char* what( void ) const { return error.c_str(); }
+  };
+  
+  //: Exception structure thrown when a bad conversion takes place
+! class BadConversion : public exception {
+!   const string _what;
+  public:
+    const char*  type_name;  //:
+!   const string data;       //:
+    size_t       retrieved;  //:
+    size_t       actual_size;//:
+    BadConversion(const char* tn, const char* d, size_t r, size_t a)
+!     : _what(string("Tried to convert \"") + string(d ? d : "") + "\" to a \"" + string(tn ? tn : "")),
+        type_name(tn), data(d), retrieved(r), actual_size(a) {};
+  
+!   BadConversion(const string &wt, const char* tn, const char* d, size_t r, size_t a)
+      : _what(wt), type_name(tn), data(d), retrieved(r), actual_size(a) {};
+  
+!   BadConversion(const string& wt = "")
+      : _what(wt), type_name("unknown"), data(""), retrieved(0), actual_size(0) {};
+  
+!   virtual const char* what( void ) const { return _what.c_str(); }
+  };
+  
+  //: Thrown when a *Null* value is trying to be converted into a type
+  //: it can't convert to.
+! class BadNullConversion : public exception {
+!   const string _what;
+  public:
+!   BadNullConversion(const string &wt = "") : _what(wt) {}
+!   virtual const char* what( void ) const { return _what.c_str(); }
+  };
+  
+--- 12,53 ----
+  
+  //: Exception thrown when a BadQuery is encountered
+! class BadQuery : public std::exception {
+  public:
+!   BadQuery(const std::string &er = "") : error(er) {}
+!   ~BadQuery() throw () {}
+!   const std::string error; //: The error message
+!   virtual const char* what( void ) const throw () { return error.c_str(); }
+  };
+  
+  //: Exception structure thrown when a bad conversion takes place
+! class BadConversion : public std::exception {
+!   const std::string _what;
+  public:
+    const char*  type_name;  //:
+!   const std::string data;       //:
+    size_t       retrieved;  //:
+    size_t       actual_size;//:
+    BadConversion(const char* tn, const char* d, size_t r, size_t a)
+!     : _what(std::string("Tried to convert \"") + std::string(d ? d : "") + "\" to a \"" + std::string(tn ? tn : "")),
+        type_name(tn), data(d), retrieved(r), actual_size(a) {};
+  
+!   BadConversion(const std::string &wt, const char* tn, const char* d, size_t r, size_t a)
+      : _what(wt), type_name(tn), data(d), retrieved(r), actual_size(a) {};
+  
+!   BadConversion(const std::string& wt = "")
+      : _what(wt), type_name("unknown"), data(""), retrieved(0), actual_size(0) {};
++   ~BadConversion() throw () {}
+  
+!   virtual const char* what( void ) const throw () { return _what.c_str(); }
+  };
+  
+  //: Thrown when a *Null* value is trying to be converted into a type 
+  //: it can't convert to.
+! class BadNullConversion : public std::exception {
+!   const std::string _what;
+  public:
+!   BadNullConversion(const std::string &wt = "") : _what(wt) {}
+!   ~BadNullConversion() throw () {}
+!   virtual const char* what( void ) const throw () { return _what.c_str(); }
+  };
+  
+***************
+*** 52,61 ****
+  // Thrown when not enough parameters are provided for a
+  // template query.
+! class SQLQueryNEParms : public exception {
+!   const string _what;
+  public:
+!   SQLQueryNEParms(const char *c) : _what(string(c ? c : "")), error(c) {}
+    const char* error; //:
+!   virtual const char* what( void ) const { return _what.c_str(); }
+  };
+  
+--- 55,65 ----
+  // Thrown when not enough parameters are provided for a 
+  // template query.
+! class SQLQueryNEParms : public std::exception {
+!   const std::string _what;
+  public:
+!   SQLQueryNEParms(const char *c) : _what(std::string(c ? c : "")), error(c) {}
+!   ~SQLQueryNEParms() throw () {}
+    const char* error; //:
+!   virtual const char* what( void ) const throw () { return _what.c_str(); }
+  };
+  
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/field_names1.hh mysql++-1.7.9-gcc3.4/sqlplusint/field_names1.hh
+*** mysql++-1.7.9-gcc3.2/sqlplusint/field_names1.hh	Mon Feb 10 11:47:44 2003
+--- mysql++-1.7.9-gcc3.4/sqlplusint/field_names1.hh	Mon Feb 10 15:10:59 2003
+***************
+*** 3,8 ****
+  #define __field_names1_hh__
+  
+! #include <vector.h>
+! #include <algo.h>
+  #include "defs"
+  #include "define_short"
+--- 3,8 ----
+  #define __field_names1_hh__
+  
+! #include <vector>
+! #include <ext/algorithm>
+  #include "defs"
+  #include "define_short"
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/field_types1.hh mysql++-1.7.9-gcc3.4/sqlplusint/field_types1.hh
+*** mysql++-1.7.9-gcc3.2/sqlplusint/field_types1.hh	Sat May 19 18:44:48 2001
+--- mysql++-1.7.9-gcc3.4/sqlplusint/field_types1.hh	Mon Feb 10 15:10:59 2003
+***************
+*** 2,12 ****
+  #define __field_types1_hh__
+  
+! #include <vector.h>
+  #include "defs"
+  #include "define_short"
+  #include "type_info1.hh"
+  
+  //: A vector of the field types.
+! class FieldTypes : public vector<mysql_type_info> {
+  private:
+    void init (const ResUse *res);
+--- 2,14 ----
+  #define __field_types1_hh__
+  
+! #include <vector>
+  #include "defs"
+  #include "define_short"
+  #include "type_info1.hh"
+  
++ //using namespace std;
++ 
+  //: A vector of the field types.
+! class FieldTypes : public std::vector<mysql_type_info> {
+  private:
+    void init (const ResUse *res);
+***************
+*** 14,18 ****
+    FieldTypes () {}
+    FieldTypes (const ResUse *res) {init(res);}
+!   FieldTypes (int i) : vector<mysql_type_info>(i) {}
+  
+    FieldTypes& operator = (const ResUse *res) {init(res); return *this;}
+--- 16,20 ----
+    FieldTypes () {}
+    FieldTypes (const ResUse *res) {init(res);}
+!   FieldTypes (int i) : std::vector<mysql_type_info>(i) {}
+  
+    FieldTypes& operator = (const ResUse *res) {init(res); return *this;}
+***************
+*** 22,30 ****
+    //: Creates a new list with i fields. 
+    
+!   mysql_type_info&  operator [] (int i) {return vector<mysql_type_info>
+  				  ::operator [] (i);}
+    //: Returns the field type for the field with an offset of i.
+    const mysql_type_info&  operator [] (int i) const 
+!     {return vector<mysql_type_info>::operator[] (i);}
+    //: Returns the field type for the field with an offset of i.
+  };
+--- 24,32 ----
+    //: Creates a new list with i fields. 
+    
+!     mysql_type_info&  operator [] (int i) {return std::vector<mysql_type_info>
+  				  ::operator [] (i);}
+    //: Returns the field type for the field with an offset of i.
+    const mysql_type_info&  operator [] (int i) const 
+!   {return std::vector<mysql_type_info>::operator[] (i);}
+    //: Returns the field type for the field with an offset of i.
+  };
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/manip.cc mysql++-1.7.9-gcc3.4/sqlplusint/manip.cc
+*** mysql++-1.7.9-gcc3.2/sqlplusint/manip.cc	Mon Feb 10 11:47:44 2003
+--- mysql++-1.7.9-gcc3.4/sqlplusint/manip.cc	Mon Feb 10 15:10:58 2003
+***************
+*** 76,80 ****
+  
+  std::ostream& operator << (std::ostream& o, const mysql_ColData<std::string>& in) {
+! 	if (dont_quote_auto || (o.rdbuf() == cout.rdbuf()) || (o.rdbuf() == cerr.rdbuf())) return o << in.get_string();
+    if (in.escape_q()) {
+      char *s = new char[in.size()*2+1];
+--- 76,80 ----
+  
+  std::ostream& operator << (std::ostream& o, const mysql_ColData<std::string>& in) {
+! 	if (dont_quote_auto || (o.rdbuf() == std::cout.rdbuf()) || (o.rdbuf() == std::cerr.rdbuf())) return o << in.get_string();
+    if (in.escape_q()) {
+      char *s = new char[in.size()*2+1];
+***************
+*** 95,99 ****
+  
+  std::ostream& operator << (std::ostream& o, const mysql_ColData<const_string>& in) {
+! 	if (dont_quote_auto || (o.rdbuf() == cout.rdbuf()) || (o.rdbuf() == cerr.rdbuf())) return o << in.get_string();
+    if (in.escape_q()) {
+      char *s = new char[in.size()*2+1];
+--- 95,99 ----
+  
+  std::ostream& operator << (std::ostream& o, const mysql_ColData<const_string>& in) {
+! 	if (dont_quote_auto || (o.rdbuf() == std::cout.rdbuf()) || (o.rdbuf() == std::cerr.rdbuf())) return o << in.get_string();
+    if (in.escape_q()) {
+      char *s = new char[in.size()*2+1];
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/manip1.hh mysql++-1.7.9-gcc3.4/sqlplusint/manip1.hh
+*** mysql++-1.7.9-gcc3.2/sqlplusint/manip1.hh	Mon Feb 10 11:47:44 2003
+--- mysql++-1.7.9-gcc3.4/sqlplusint/manip1.hh	Mon Feb 10 15:10:59 2003
+***************
+*** 25,33 ****
+  
+  struct quote_type1 {
+!   ostream *ostr;
+!   quote_type1(ostream *o) : ostr(o) {}
+  }; 
+  
+! inline quote_type1 operator << (ostream &o, quote_type0 esc) {
+    return quote_type1(&o);
+  }
+--- 25,33 ----
+  
+  struct quote_type1 {
+!   std::ostream *ostr;
+!   quote_type1(std::ostream *o) : ostr(o) {}
+  }; 
+  
+! inline quote_type1 operator << (std::ostream &o, quote_type0 esc) {
+    return quote_type1(&o);
+  }
+***************
+*** 45,49 ****
+  
+  template <class T>
+! inline ostream& operator << (quote_type1 o, const T &in) {
+    return *o.ostr << in;
+  }
+--- 45,49 ----
+  
+  template <class T>
+! inline std::ostream& operator << (quote_type1 o, const T &in) {
+    return *o.ostr << in;
+  }
+***************
+*** 99,104 ****
+  
+  struct quote_only_type1 {
+!   ostream *ostr;
+!   quote_only_type1(ostream *o) : ostr(o) {}
+  }; 
+  
+--- 99,104 ----
+  
+  struct quote_only_type1 {
+!   std::ostream *ostr;
+!   quote_only_type1(std::ostream *o) : ostr(o) {}
+  }; 
+  
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/query.cc mysql++-1.7.9-gcc3.4/sqlplusint/query.cc
+*** mysql++-1.7.9-gcc3.2/sqlplusint/query.cc	Mon Feb 10 11:47:44 2003
+--- mysql++-1.7.9-gcc3.4/sqlplusint/query.cc	Mon Feb 10 15:10:58 2003
+***************
+*** 1,4 ****
+--- 1,5 ----
+  
+  #include "query3.hh"
++ #include "row2.hh"
+  
+  MysqlQuery::MysqlQuery(const MysqlQuery &q) : SQLQuery(q) {
+*** mysql++-1.7.9-gcc3.2/sqlplusint/resiter1.hh	Sat May 19 18:44:48 2001
+--- mysql++-1.7.9-gcc3.4/sqlplusint/resiter1.hh	Mon Feb 10 15:10:59 2003
+***************
+*** 4,8 ****
+  #include "defs"
+  #include "row1.hh"
+! #include <iterator.h>
+  
+  template <class OnType, class ReturnType, class SizeType, class DiffType>
+--- 4,8 ----
+  #include "defs"
+  #include "row1.hh"
+! #include <iterator>
+  
+  template <class OnType, class ReturnType, class SizeType, class DiffType>
+***************
+*** 23,28 ****
+                                                   iterator;   //:
+    typedef iterator                               const_iterator; //:
+!   typedef const ::reverse_iterator<iterator>       reverse_iterator; //:
+!   typedef const ::reverse_iterator<const_iterator> const_reverse_iterator; //:
+    
+    typedef ValueType   value_type; //:
+--- 23,28 ----
+    iterator;   //:
+    typedef iterator                               const_iterator; //:
+!   typedef const std::reverse_iterator<iterator>       reverse_iterator; //:
+!   typedef const std::reverse_iterator<const_iterator> const_reverse_iterator; //:
+    
+    typedef ValueType   value_type; //:
+***************
+*** 47,50 ****
+--- 47,59 ----
+    reverse_iterator rend()   const {return reverse_iterator(begin());} //:
+  };
++ 
++ template<typename _Tp, typename _Distance>
++   struct random_access_iterator {
++     typedef std::random_access_iterator_tag iterator_category;
++     typedef _Tp                        value_type;
++     typedef _Distance                  difference_type;
++     typedef _Tp*                       pointer;
++     typedef _Tp&                       reference;
++   };
+  
+  //:
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/result1.hh mysql++-1.7.9-gcc3.4/sqlplusint/result1.hh
+*** mysql++-1.7.9-gcc3.2/sqlplusint/result1.hh	Mon Feb 10 11:47:44 2003
+--- mysql++-1.7.9-gcc3.4/sqlplusint/result1.hh	Mon Feb 10 15:10:59 2003
+***************
+*** 8,13 ****
+  #define errno WSAGetLastError()
+  #endif
+! #include <map.h>
+! #include <set.h>
+  #include <mysql.h>
+  #include <string>
+--- 8,13 ----
+  #define errno WSAGetLastError()
+  #endif
+! #include <map>
+! #include <set>
+  #include <mysql.h>
+  #include <string>
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/row2.hh mysql++-1.7.9-gcc3.4/sqlplusint/row2.hh
+*** mysql++-1.7.9-gcc3.2/sqlplusint/row2.hh	Mon Feb 10 11:47:44 2003
+--- mysql++-1.7.9-gcc3.4/sqlplusint/row2.hh	Mon Feb 10 15:10:59 2003
+***************
+*** 2,6 ****
+  #define __row2_hh__
+  
+! #include "string.h"
+  #include "row1.hh"
+  #include "result2.hh"
+--- 2,6 ----
+  #define __row2_hh__
+  
+! #include <string>
+  #include "row1.hh"
+  #include "result2.hh"
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/set1.hh mysql++-1.7.9-gcc3.4/sqlplusint/set1.hh
+*** mysql++-1.7.9-gcc3.2/sqlplusint/set1.hh	Mon Feb 10 11:47:44 2003
+--- mysql++-1.7.9-gcc3.4/sqlplusint/set1.hh	Mon Feb 10 15:10:59 2003
+***************
+*** 10,14 ****
+  #include <set>
+  #include <vector>
+! #include <iostream.h>
+  #include "define_short"
+  #include "coldata1.hh"
+--- 10,14 ----
+  #include <set>
+  #include <vector>
+! #include <iostream>
+  #include "define_short"
+  #include "coldata1.hh"
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/set3.hh mysql++-1.7.9-gcc3.4/sqlplusint/set3.hh
+*** mysql++-1.7.9-gcc3.2/sqlplusint/set3.hh	Mon Feb 10 11:48:13 2003
+--- mysql++-1.7.9-gcc3.4/sqlplusint/set3.hh	Mon Feb 10 15:10:59 2003
+***************
+*** 20,24 ****
+  
+  template <class Container>
+! ostream& Set<Container>::out_stream (ostream &s) const {
+    typename Container::const_iterator i = begin();
+    typename Container::const_iterator e = end();
+--- 20,24 ----
+  
+  template <class Container>
+! std::ostream& Set<Container>::out_stream (std::ostream &s) const {
+    typename Container::const_iterator i = begin();
+    typename Container::const_iterator e = end();
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/sql_query.cc mysql++-1.7.9-gcc3.4/sqlplusint/sql_query.cc
+*** mysql++-1.7.9-gcc3.2/sqlplusint/sql_query.cc	Mon Feb 10 11:47:44 2003
+--- mysql++-1.7.9-gcc3.4/sqlplusint/sql_query.cc	Mon Feb 10 15:10:58 2003
+***************
+*** 36,50 ****
+  char * SQLQuery::preview_char() {
+    *this << std::ends;
+! #ifdef __USLC__
+!   strstreambuf *tmpbuf = rdbuf();
+!   uint length = tmpbuf->pcount();
+! #else
+!   uint length = pcount();
+! #endif
+!   char *s = new char[length+1]; 
+!   get(s, length, '\0'); 
+    seekg (0,std::ios::beg);
+    seekp (-1,std::ios::cur);
+!   return s;
+  }
+  
+--- 36,43 ----
+  char * SQLQuery::preview_char() {
+    *this << std::ends;
+!   std::string s = this->str();
+    seekg (0,std::ios::beg);
+    seekp (-1,std::ios::cur);
+!   return (char*)s.c_str();
+  }
+  
+***************
+*** 100,112 ****
+    if (!parsed.empty()) const_this->proc(const_cast<SQLQueryParms&>(p));
+    *const_this << std::ends;
+! #ifdef __USLC__
+!   strstreambuf *tmpbuf = const_this->rdbuf();
+!   uint length = tmpbuf->pcount() + 1;
+!   char *s = new char[length]; 
+! #else
+!   uint length = const_this->pcount() + 1;
+!   char s[length]; 
+! #endif
+!   const_this->get(s, length, '\0'); 
+    const_this->seekg (0,std::ios::beg);
+    const_this->seekp (-1,std::ios::cur);
+--- 93,97 ----
+    if (!parsed.empty()) const_this->proc(const_cast<SQLQueryParms&>(p));
+    *const_this << std::ends;
+!   std::string s = this->str();
+    const_this->seekg (0,std::ios::beg);
+    const_this->seekp (-1,std::ios::cur);
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/sql_query1.hh mysql++-1.7.9-gcc3.4/sqlplusint/sql_query1.hh
+*** mysql++-1.7.9-gcc3.2/sqlplusint/sql_query1.hh	Mon Feb 10 11:47:44 2003
+--- mysql++-1.7.9-gcc3.4/sqlplusint/sql_query1.hh	Mon Feb 10 15:10:59 2003
+***************
+*** 2,6 ****
+  #define __sql_query_1_hh
+  
+! #include <strstream.h>
+  #include <vector>
+  #include <map>
+--- 2,6 ----
+  #define __sql_query_1_hh
+  
+! #include <sstream>
+  #include <vector>
+  #include <map>
+***************
+*** 108,112 ****
+  // methods except for *error()* and *success()*.
+  
+! class SQLQuery : public strstream { 
+    friend class SQLQueryParms;
+  private:
+--- 109,113 ----
+  // methods except for *error()* and *success()*.
+  
+! class SQLQuery : public std::stringstream { 
+    friend class SQLQueryParms;
+  private:
+***************
+*** 168,171 ****
+--- 169,173 ----
+    template <class T> SQLQuery& update(const T &o, const T &n) {
+      reset();
++     enum sql_cmp_type {sql_use_compare};
+      *this << "UPDATE " << o.table() << " SET " << n.equal_list() 
+            << " WHERE " << o.equal_list(" AND ", sql_use_compare);
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/stream2string3.hh mysql++-1.7.9-gcc3.4/sqlplusint/stream2string3.hh
+*** mysql++-1.7.9-gcc3.2/sqlplusint/stream2string3.hh	Sat May 19 18:44:48 2001
+--- mysql++-1.7.9-gcc3.4/sqlplusint/stream2string3.hh	Mon Feb 10 15:10:59 2003
+***************
+*** 2,20 ****
+  #define __stream2string3_hh__
+  
+! #include <strstream.h>
+  
+  template<class Strng, class T>
+  Strng stream2string(const T &object) {
+!   ostrstream str;
+    object.out_stream(str);
+!   str << ends;
+!   Strng s = str.str();
+! #ifdef __USLC__
+!   strstreambuf *tmpbuf = str.rdbuf();
+!   tmpbuf->freeze(0);
+! #else
+!   str.freeze(0);
+! #endif
+!   return s;
+  }
+  
+--- 2,13 ----
+  #define __stream2string3_hh__
+  
+! #include <sstream>
+  
+  template<class Strng, class T>
+  Strng stream2string(const T &object) {
+!   std::ostringstream str;
+    object.out_stream(str);
+!   str << std::ends;
+!   return str.str();
+  }
+  
+diff -b -C2 mysql++-1.7.9-gcc3.2/sqlplusint/type_info.cc mysql++-1.7.9-gcc3.4/sqlplusint/type_info.cc
+*** mysql++-1.7.9-gcc3.2/sqlplusint/type_info.cc	Mon Feb 10 11:47:44 2003
+--- mysql++-1.7.9-gcc3.4/sqlplusint/type_info.cc	Mon Feb 10 15:10:58 2003
+***************
+*** 6,10 ****
+  #endif
+  #include <mysql.h>
+! #include <string.h>
+  #include "datetime1.hh"
+  #include "set1.hh"
+--- 6,10 ----
+  #endif
+  #include <mysql.h>
+! #include <string>
+  #include "datetime1.hh"
+  #include "set1.hh"
