@@ -17,6 +17,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Mysql++ is a C++ interface to MySQL API.
+
 %description -l pl
 Mysql++ jest interfejsem C++ do API MySQL.
 
@@ -65,7 +66,8 @@ rm -f missing
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -80,9 +82,9 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %doc README doc/*
-%{_includedir}/*
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
+%{_includedir}/*
 
 %files static
 %defattr(644,root,root,755)
