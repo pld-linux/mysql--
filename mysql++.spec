@@ -70,7 +70,8 @@ statyczne.
 %{__aclocal}
 %{__autoconf}
 %{__automake}
-%configure
+%configure \
+	--with-mysql-lib=%{_libdir}
 %{__make}
 
 %install
