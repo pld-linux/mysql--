@@ -2,7 +2,7 @@ Summary:	C++ interface to MySQL Database
 Summary(pl):	Interfejs C++ do bazy MySQL
 Name:		mysql++
 Version:	1.7.9
-Release:	4
+Release:	5
 License:	LGPL
 Group:		Libraries
 Source0:	ftp://sunsite.icm.edu.pl/pub/unix/mysql/Downloads/mysql++/%{name}-%{version}.tar.gz
