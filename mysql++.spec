@@ -7,7 +7,7 @@ License:	LGPL
 Group:		Development/Libraries
 Source0:	ftp://sunsite.icm.edu.pl/pub/unix/mysql/Downloads/mysql++/%{name}-%{version}.tar.gz
 # Source0-md5:	1312fb4e33dcce07fac5fa9c2ac801f7
-Patch0:		%{name}-gcc3.patch
+Patch0:		%{name}-mysql4.patch
 URL:		http://www.mysql.com/downloads/api-mysql++.html
 BuildRequires:	autoconf
 BuildRequires:	automake
