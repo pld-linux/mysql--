@@ -14,6 +14,7 @@ Patch2:		ftp://sunsite.icm.edu.pl/pub/unix/mysql/Downloads/mysql++/mysql++-gcc-3
 Patch3:		%{name}-gcc-3.4.patch
 Patch4:		%{name}-examples-gcc3.patch
 Patch5:		%{name}-nolibs.patch
+Patch6:		%{name}-libpath.patch
 URL:		http://www.mysql.com/downloads/api-mysql++.html
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -64,6 +65,7 @@ statyczne.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 %{__libtoolize}
