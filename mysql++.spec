@@ -6,6 +6,7 @@ Release:	2
 License:	LGPL
 Group:		Development/Libraries
 Source0:	ftp://sunsite.icm.edu.pl/pub/unix/mysql/Downloads/mysql++/%{name}-%{version}.tar.gz
+# Source0-md5:	1312fb4e33dcce07fac5fa9c2ac801f7
 Patch0:		%{name}-gcc3.patch
 URL:		http://www.mysql.com/downloads/api-mysql++.html
 BuildRequires:	autoconf
@@ -68,8 +69,8 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
