@@ -1,11 +1,12 @@
---- mysql++-1.7.9/configure.in.orig	2004-04-02 00:46:34.000000000 +0200
-+++ mysql++-1.7.9/configure.in	2004-04-02 01:18:56.645814648 +0200
-@@ -37,7 +37,7 @@
+diff -urN mysql++-1.7.26.org/configure.in mysql++-1.7.26/configure.in
+--- mysql++-1.7.26.org/configure.in	2005-01-08 00:51:11.209317367 +0100
++++ mysql++-1.7.26/configure.in	2005-01-08 00:51:37.066045558 +0100
+@@ -32,7 +32,7 @@
  
  AC_ARG_WITH(mysql-lib,
      [  --with-mysql-lib=<path> directory path of MySQL library installation],
--    [MYSQL_lib_check=$with_mysql/lib/mysql])
-+    [MYSQL_lib_check=$with_mysql_lib])
+-    [MYSQL_lib_check="$with_mysql_lib/lib $with_mysql_lib/lib/mysql"])
++    [MYSQL_lib_check="$with_mysql_lib $with_mysql_lib/lib $with_mysql_lib/lib/mysql"])
  
  AC_ARG_WITH(mysql-include,
      [  --with-mysql-include=<path>
