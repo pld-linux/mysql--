@@ -2,12 +2,18 @@ Summary:	C++ interface to MySQL Database
 Summary(pl):	Interfejs C++ do bazy MySQL
 Name:		mysql++
 Version:	1.7.9
-Release:	3
+Release:	4
 License:	LGPL
-Group:		Development/Libraries
+Group:		Libraries
 Source0:	ftp://sunsite.icm.edu.pl/pub/unix/mysql/Downloads/mysql++/%{name}-%{version}.tar.gz
 # Source0-md5:	1312fb4e33dcce07fac5fa9c2ac801f7
-Patch0:		%{name}-gcc3.patch
+Patch0:		ftp://sunsite.icm.edu.pl/pub/unix/mysql/Downloads/mysql++/mysql++-gcc-3.0.patch.gz
+Patch1:		ftp://sunsite.icm.edu.pl/pub/unix/mysql/Downloads/mysql++/mysql++-gcc-3.2.patch.gz
+Patch2:		ftp://sunsite.icm.edu.pl/pub/unix/mysql/Downloads/mysql++/mysql++-gcc-3.2.2.patch.gz
+# fixed from ftp://sunsite.icm.edu.pl/pub/unix/mysql/Downloads/mysql++/mysqlplus-gcc-3.4.patch.gz
+Patch3:		%{name}-gcc-3.4.patch
+Patch4:		%{name}-examples-gcc3.patch
+Patch5:		%{name}-nolibs.patch
 URL:		http://www.mysql.com/downloads/api-mysql++.html
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -25,7 +31,7 @@ Mysql++ jest interfejsem C++ do API MySQL.
 Summary:	C++ interface to MySQL Database (headers)
 Summary(pl):	Interfejs C++ do bazy MySQL (pliki nag³ówkowe)
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Mysql++ is a C++ interface to MySQL API. Package contains the
@@ -40,7 +46,7 @@ potrzebne do rozwoju aplikacji klienckich u¿ywaj±cych Mysql++.
 Summary:	C++ interface to MySQL Database (static libraries)
 Summary(pl):	Interfejs C++ do bazy MySQL (biblioteki statyczne)
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Mysql++ is a C++ interface to MySQL API. Package contains the static
@@ -53,9 +59,13 @@ statyczne.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
-rm -f missing
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
