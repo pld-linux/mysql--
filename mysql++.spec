@@ -12,6 +12,7 @@ Patch2:		%{name}-libpath.patch
 URL:		http://tangentsoft.net/mysql++/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	mysql-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -26,6 +27,8 @@ Mysql++ jest interfejsem C++ do API MySQL.
 Summary:	C++ interface to MySQL Database (headers)
 Summary(pl):	Interfejs C++ do bazy MySQL (pliki nag³ówkowe)
 Group:		Development/Libraries
+Requires:	libstdc++-devel
+Requires:	mysql-devel
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
