@@ -1,5 +1,5 @@
 Summary:	C++ interface to MySQL Database
-Summary(pl):	Interfejs C++ do bazy MySQL
+Summary(pl.UTF-8):   Interfejs C++ do bazy MySQL
 Name:		mysql++
 Version:	1.7.26
 Release:	4
@@ -20,12 +20,12 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Mysql++ is a C++ interface to MySQL API.
 
-%description -l pl
+%description -l pl.UTF-8
 Mysql++ jest interfejsem C++ do API MySQL.
 
 %package devel
 Summary:	C++ interface to MySQL Database (headers)
-Summary(pl):	Interfejs C++ do bazy MySQL (pliki nag≥Ûwkowe)
+Summary(pl.UTF-8):   Interfejs C++ do bazy MySQL (pliki nag≈Ç√≥wkowe)
 Group:		Development/Libraries
 Requires:	libstdc++-devel
 Requires:	mysql-devel
@@ -36,13 +36,13 @@ Mysql++ is a C++ interface to MySQL API. Package contains the
 development header files necessary to develop MySQL client
 applications using Mysql++.
 
-%description devel -l pl
-Mysql++ jest interfejsem C++ do API MySQL. Paczka zawiera nag≥Ûwki
-potrzebne do rozwoju aplikacji klienckich uøywaj±cych Mysql++.
+%description devel -l pl.UTF-8
+Mysql++ jest interfejsem C++ do API MySQL. Paczka zawiera nag≈Ç√≥wki
+potrzebne do rozwoju aplikacji klienckich u≈ºywajƒÖcych Mysql++.
 
 %package static
 Summary:	C++ interface to MySQL Database (static libraries)
-Summary(pl):	Interfejs C++ do bazy MySQL (biblioteki statyczne)
+Summary(pl.UTF-8):   Interfejs C++ do bazy MySQL (biblioteki statyczne)
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -50,7 +50,7 @@ Requires:	%{name}-devel = %{version}-%{release}
 Mysql++ is a C++ interface to MySQL API. Package contains the static
 libraries.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Mysql++ jest interfejsem C++ do API MySQL. Paczka zawiera biblioteki
 statyczne.
 
