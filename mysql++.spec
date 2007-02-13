@@ -1,5 +1,5 @@
 Summary:	C++ interface to MySQL Database
-Summary(pl.UTF-8):   Interfejs C++ do bazy MySQL
+Summary(pl.UTF-8):	Interfejs C++ do bazy MySQL
 Name:		mysql++
 Version:	1.7.26
 Release:	4
@@ -25,7 +25,7 @@ Mysql++ jest interfejsem C++ do API MySQL.
 
 %package devel
 Summary:	C++ interface to MySQL Database (headers)
-Summary(pl.UTF-8):   Interfejs C++ do bazy MySQL (pliki nagłówkowe)
+Summary(pl.UTF-8):	Interfejs C++ do bazy MySQL (pliki nagłówkowe)
 Group:		Development/Libraries
 Requires:	libstdc++-devel
 Requires:	mysql-devel
@@ -42,7 +42,7 @@ potrzebne do rozwoju aplikacji klienckich używających Mysql++.
 
 %package static
 Summary:	C++ interface to MySQL Database (static libraries)
-Summary(pl.UTF-8):   Interfejs C++ do bazy MySQL (biblioteki statyczne)
+Summary(pl.UTF-8):	Interfejs C++ do bazy MySQL (biblioteki statyczne)
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
