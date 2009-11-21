@@ -1,12 +1,14 @@
---- mysql++-1.7.9/configure.in.orig	2001-05-19 18:44:46.000000000 +0200
-+++ mysql++-1.7.9/configure.in	2004-04-02 00:04:39.972332000 +0200
-@@ -97,9 +97,6 @@
- AC_PROG_CC
- AC_PROG_CXX
+--- mysql++-3.0.9/configure.in.orig	2009-11-21 22:26:54.033831728 +0100
++++ mysql++-3.0.9/configure.ac	2009-11-21 22:26:59.248648480 +0100
+@@ -55,11 +55,9 @@
  
+ # Checks for libraries and local system features
+ LIB_MATH
+-LIB_SOCKET_NSL
+ MYSQL_API_LOCATION
+ MYSQL_WITH_SSL
+ AX_C_LOCALTIME_R
 -AC_CHECK_LIB(intl, main)
--AC_CHECK_LIB(socket, main)
--AC_CHECK_LIB(nsl, main)
- AC_CHECK_LIB(mysqlclient, mysql_store_result)
- AM_WITH_DMALLOC()
  
+ 
+ # If this is Cygwin, add a linker flag to suppress a silly link message.

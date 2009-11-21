@@ -1,17 +1,16 @@
 Summary:	C++ interface to MySQL Database
 Summary(pl.UTF-8):	Interfejs C++ do bazy MySQL
 Name:		mysql++
-Version:	1.7.26
-Release:	4
+Version:	3.0.9
+Release:	1
 License:	LGPL
 Group:		Libraries
 Source0:	http://tangentsoft.net/mysql++/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	2e425b1a334523723aadd86c9a3185bc
-Patch1:		%{name}-nolibs.patch
-Patch2:		%{name}-libpath.patch
+# Source0-md5:	4acc1603846fe67d36b6243bfb805652
+Patch0:		%{name}-nolibs.patch
 URL:		http://tangentsoft.net/mysql++/
 BuildRequires:	autoconf
-BuildRequires:	automake
+BuildRequires:	bakefile
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	mysql-devel
@@ -56,17 +55,15 @@ statyczne.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
+%patch0 -p1
 
 %build
-%{__libtoolize}
-%{__aclocal}
 %{__autoconf}
-%{__automake}
 %configure \
-	--with-mysql-lib=%{_libdir}
-%{__make}
+	--enable-static
+
+%{__make} \
+	CXXFLAGS="%{rpmcxxflags} -fPIC"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -83,14 +80,14 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/lib*.so.3
 
 %files devel
 %defattr(644,root,root,755)
 %doc doc/*
 %attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
 %{_includedir}/*
 
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/lib*.a
+#%files static
+#%defattr(644,root,root,755)
+#%{_libdir}/lib*.a
