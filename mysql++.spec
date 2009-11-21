@@ -59,8 +59,7 @@ statyczne.
 
 %build
 %{__autoconf}
-%configure \
-	--enable-static
+%configure
 
 %{__make} \
 	CXXFLAGS="%{rpmcxxflags} -fPIC"
