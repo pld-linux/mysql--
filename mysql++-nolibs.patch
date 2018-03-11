@@ -1,11 +1,11 @@
 --- mysql++-3.0.9/configure.in.orig	2009-11-21 22:26:54.033831728 +0100
 +++ mysql++-3.0.9/configure.ac	2009-11-21 22:26:59.248648480 +0100
-@@ -55,11 +55,9 @@
+@@ -55,12 +55,10 @@
  
  # Checks for libraries and local system features
  LIB_MATH
 -LIB_SOCKET_NSL
- MYSQL_API_LOCATION
+ MYSQL_C_API_LOCATION
  MYSQL_WITH_SSL
  AX_C_LOCALTIME_R
 -AC_CHECK_LIB(intl, main)

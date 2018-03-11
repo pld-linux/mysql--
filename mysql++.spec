@@ -1,12 +1,12 @@
 Summary:	C++ interface to MySQL Database
 Summary(pl.UTF-8):	Interfejs C++ do bazy MySQL
 Name:		mysql++
-Version:	3.0.9
-Release:	2
+Version:	3.2.3
+Release:	1
 License:	LGPL
 Group:		Libraries
-Source0:	http://tangentsoft.net/mysql++/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	4acc1603846fe67d36b6243bfb805652
+Source0:	https://tangentsoft.com/mysqlpp/releases/%{name}-%{version}.tar.gz
+# Source0-md5:	5ded941ffeeec895022b97e58b1b204b
 Patch0:		%{name}-nolibs.patch
 URL:		http://tangentsoft.net/mysql++/
 BuildRequires:	autoconf
